@@ -1,9 +1,9 @@
 export const userLogin = (req,res)=>{
-    res.send('This is Login route');   
+    console.log("This is a user Login route");
 }
 
 export const userSignup = (req,res)=>{
-    res.send('This is Signup route');
+    console.log("This is a user Signup route");
 }
 
 

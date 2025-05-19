@@ -1,12 +1,97 @@
 import express from 'express';
 import router from './route.js';
+// import { userLogin, userSignup } from './controller.js';
 const app = express();
 
+
+
+
+// app.set('view engine','ejs')
+
+// app.get('/',(req,res)=>{
+//     const userName = "Mehtab Alam";
+//     res.render('index',{userName});
+// })
+
+app.use(express.static('public'))
+
 app.get('/',(req,res)=>{
-    res.send('Hello ,Express');
 })
+
+
+// app.get('/user/:username' ,(req,res)=>{
+//     const username = req.params.username;
+//     res.send(`Welcome ${username}`);
+// })
+
+// app.get('/search',(req,res)=>{ 
+//     const keyword = req.query.keyword;
+//     res.send(`Searching for ${keyword}`);
+// }) 
+
+// app.get('/user/login',userLogin);
+// app.get('/user/signup',userSignup);
+
 app.use('/user',router);
-const PORT = 3000;
-app.listen(PORT,()=>{
-    console.log(`Server is running on port ${PORT}`);
+app.use(express.json());
+
+// app.post('/users',(req,res)=>{
+//     const {name,email} = req.body;
+//     res.json({
+//         message :`the user ${name} with email ${email} login successfully`
+//     })
+// })
+
+
+// app.put('/users/:id',(req,res)=>{
+//     const userId = req.params.id;
+//     const {name,email} = req.body;
+//     res.json({
+//         message:`User ${userId} updated to ${name},${email}`
+//     })
+// })
+
+// app.delete('/user/:id',(req,res)=>{
+//     const userId = req.params.id;
+//     res.json({
+//         message:`User with ID ${userId} deleted successfully`
+//     })
+// })
+
+// handle muttiple router
+
+app.get('/things/:name/:id', (req, res) => {
+    const { id, name } = req.params;
+    const idPattern = /^\d{5}$/; // Regex for exactly 5 digits
+
+    // Check if id does NOT match the pattern
+    if (!idPattern.test(id)) {
+        return res.status(400).json({ error: 'id must be exactly 5 digits long' });
+    }
+
+    // If validation passes, return the id and name
+    res.json({
+        id,
+        name
+    });
 });
+
+//types of middleware
+
+// Application Level Middleware
+// app.use((req,res,next)=>{
+//     console.log('A new request recieved at'+Date.now());
+//     next();
+// })
+
+// Router Level Middleware
+
+
+
+
+
+const PORT = 3000;
+
+app.listen(PORT,()=>{
+    console.log(`app is running on ${PORT} number`);
+})
