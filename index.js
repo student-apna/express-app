@@ -1,10 +1,11 @@
-import express from 'express';
+import express, { urlencoded } from 'express';
 import router from './route.js';
 // import { userLogin, userSignup } from './controller.js';
 const app = express();
 
 
-
+import multer from 'multer';
+import {storage} from './config/multer.js'
 
 // app.set('view engine','ejs')
 
@@ -13,9 +14,15 @@ const app = express();
 //     res.render('index',{userName});
 // })
 
-app.use(express.static('public'))
+// app.use(express.static('public'))
+// app.use(express.static('images'))
+
+// app.use('/public',express.static('public'))
+// app.use('/images',express.static('images'))
+
 
 app.get('/',(req,res)=>{
+    res.send("hello world");
 })
 
 
@@ -60,21 +67,21 @@ app.use(express.json());
 
 // handle muttiple router
 
-app.get('/things/:name/:id', (req, res) => {
-    const { id, name } = req.params;
-    const idPattern = /^\d{5}$/; // Regex for exactly 5 digits
+// app.get('/things/:name/:id', (req, res) => {
+//     const { id, name } = req.params;
+//     const idPattern = /^\d{5}$/; // Regex for exactly 5 digits
 
-    // Check if id does NOT match the pattern
-    if (!idPattern.test(id)) {
-        return res.status(400).json({ error: 'id must be exactly 5 digits long' });
-    }
+//     // Check if id does NOT match the pattern
+//     if (!idPattern.test(id)) {
+//         return res.status(400).json({ error: 'id must be exactly 5 digits long' });
+//     }
 
-    // If validation passes, return the id and name
-    res.json({
-        id,
-        name
-    });
-});
+//     // If validation passes, return the id and name
+//     res.json({
+//         id,
+//         name
+//     });
+// });
 
 //types of middleware
 
@@ -85,6 +92,40 @@ app.get('/things/:name/:id', (req, res) => {
 // })
 
 // Router Level Middleware
+
+
+// handling form data
+
+app.use(urlencoded({extended:true}))
+
+
+
+
+
+// app.use(upload.array())
+
+
+
+// recieve any file  and save in the folder
+
+
+// const upload = multer(
+//     {
+//         storage,
+//         limits:{
+//             fileSize:1024000
+//         }
+//     });
+
+// app.use(upload.single('image'))
+
+// app.get('/form',(req,res)=>{
+//     console.log(req.body);
+//     console.log(req.file);
+//     res.send('Form recieved')
+// })
+
+
 
 
 
